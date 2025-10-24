@@ -8,6 +8,8 @@ public class ImdbContext : DbContext
 {
     public DbSet<AppUser> AppUsers { get; set; }
     public DbSet<Movie> Movies { get; set; }
+    public DbSet<Person> Persons { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -39,7 +41,13 @@ public class ImdbContext : DbContext
         modelBuilder.Entity<Movie>().Property(m => m.RunTimeMinutes).HasColumnName("runtime_minutes");
         modelBuilder.Entity<Movie>().Property(m => m.EndYear).HasColumnName("plot_summary");
         modelBuilder.Entity<Movie>().Property(m => m.EndYear).HasColumnName("poster_url");
+        
+        modelBuilder.Entity<Person>().ToTable("person");
+        modelBuilder.Entity<Person>().HasKey(p => p.PersonId);
+        modelBuilder.Entity<Person>().Property(p => p.PersonId).HasColumnName("person_id");
+        modelBuilder.Entity<Person>().Property(p => p.Nconst).HasColumnName("nconst");
+        modelBuilder.Entity<Person>().Property(p => p.PrimaryName).HasColumnName("primary_name");
+        modelBuilder.Entity<Person>().Property(p => p.BirthYear).HasColumnName("birth_year");
+        modelBuilder.Entity<Person>().Property(p => p.DeathYear).HasColumnName("death_year");
     }
-    
-    
 }

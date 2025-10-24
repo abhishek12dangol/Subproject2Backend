@@ -1,7 +1,7 @@
 using IMDB.DataServiceLayer.Models;
 namespace IMDB.DataServiceLayer;
 
-public interface IDataService
+public interface IUserService
 {
     // Users
     int RegisterUser(string username, string password, string email);

@@ -2,7 +2,8 @@ using IMDB.DataServiceLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
-builder.Services.AddScoped<IDataService, DataService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPersonService, PersonService>();
 
 var app = builder.Build();
 app.MapControllers();

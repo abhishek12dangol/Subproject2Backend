@@ -8,8 +8,8 @@ namespace IMDB.WebServiceLayer.Controllers;
 [Route("api/users")]
 public class UserController: ControllerBase
 {
-    private readonly IDataService _service;
-    public UserController(IDataService service) => _service = service;
+    private readonly IUserService _service;
+    public UserController(IUserService service) => _service = service;
 
     [HttpGet]
     public IActionResult GetAllUsers()

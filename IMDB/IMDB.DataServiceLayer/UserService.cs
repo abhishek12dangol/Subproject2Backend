@@ -1,11 +1,11 @@
 ﻿using IMDB.DataServiceLayer.Models;
 namespace IMDB.DataServiceLayer;
 
-public class DataService : IDataService
+public class UserService : IUserService
 {
     private readonly ImdbContext _imdbContext;
 
-    public DataService()
+    public UserService()
     {
         _imdbContext = new ImdbContext();
     }
