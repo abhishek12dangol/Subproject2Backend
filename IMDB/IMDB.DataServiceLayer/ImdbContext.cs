@@ -9,6 +9,7 @@ public class ImdbContext : DbContext
     public DbSet<AppUser> AppUsers { get; set; }
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Person> Persons { get; set; }
+    public DbSet<PersonKnownFor> PersonKnownFors { get; set; }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,6 +32,7 @@ public class ImdbContext : DbContext
         
         modelBuilder.Entity<Movie>().ToTable("movie");
         modelBuilder.Entity<Movie>().HasKey(m => m.Id);
+        modelBuilder.Entity<Movie>().Property(m => m.Id).HasColumnName("movie_id");
         modelBuilder.Entity<Movie>().Property(m => m.Tconst).HasColumnName("tconst");
         modelBuilder.Entity<Movie>().Property(m => m.TitleType).HasColumnName("title_type");
         modelBuilder.Entity<Movie>().Property(m => m.PrimaryTitle).HasColumnName("primary_title");
@@ -39,8 +41,8 @@ public class ImdbContext : DbContext
         modelBuilder.Entity<Movie>().Property(m => m.StartYear).HasColumnName("start_year");
         modelBuilder.Entity<Movie>().Property(m => m.EndYear).HasColumnName("end_year");
         modelBuilder.Entity<Movie>().Property(m => m.RunTimeMinutes).HasColumnName("runtime_minutes");
-        modelBuilder.Entity<Movie>().Property(m => m.EndYear).HasColumnName("plot_summary");
-        modelBuilder.Entity<Movie>().Property(m => m.EndYear).HasColumnName("poster_url");
+        modelBuilder.Entity<Movie>().Property(m => m.PlotSummary).HasColumnName("plot_summary");
+        modelBuilder.Entity<Movie>().Property(m => m.PosterUrl).HasColumnName("poster_url");
         
         modelBuilder.Entity<Person>().ToTable("person");
         modelBuilder.Entity<Person>().HasKey(p => p.PersonId);
@@ -49,5 +51,14 @@ public class ImdbContext : DbContext
         modelBuilder.Entity<Person>().Property(p => p.PrimaryName).HasColumnName("primary_name");
         modelBuilder.Entity<Person>().Property(p => p.BirthYear).HasColumnName("birth_year");
         modelBuilder.Entity<Person>().Property(p => p.DeathYear).HasColumnName("death_year");
+        
+        modelBuilder.Entity<PersonKnownFor>().ToTable("personknownfor");
+        modelBuilder.Entity<PersonKnownFor>().HasKey(pk => new { pk.PersonId, pk.MovieId});
+        modelBuilder.Entity<PersonKnownFor>().Property(pk => pk.PersonId).HasColumnName("person_id");
+        modelBuilder.Entity<PersonKnownFor>().Property(pk => pk.MovieId).HasColumnName("movie_id");
+        modelBuilder.Entity<PersonKnownFor>().HasOne(pk => pk.Person).WithMany(p => p.KnownFors)
+            .HasForeignKey(pk => pk.PersonId);
+        modelBuilder.Entity<PersonKnownFor>().HasOne(pk => pk.Movie).WithMany(m => m.KnownFors)
+            .HasForeignKey(pk => pk.MovieId);
     }
 }

@@ -7,4 +7,5 @@ public class Person
     public string PrimaryName { get; set; }
     public int? BirthYear { get; set; }
     public int? DeathYear { get; set; }
+    public IList<PersonKnownFor> KnownFors { get; set; }
 }
